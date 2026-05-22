@@ -21,13 +21,13 @@ io.on("connection", (socket) => {
   });
 });
 
-// ===== CLIENT BUILD (PROD) =====
+// ===== CLIENT BUILD =====
 const clientPath = path.join(__dirname, "client", "dist");
+
 app.use(express.static(clientPath));
 
-// IMPORTANT : FIX ERREUR path-to-regexp
-// NE PAS utiliser "*"
-app.get("/*", (req, res) => {
+// IMPORTANT (fix Render + Express 5 issues)
+app.get(/.*/, (req, res) => {
   res.sendFile(path.join(clientPath, "index.html"));
 });
 
